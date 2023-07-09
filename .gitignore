@@ -364,6 +364,7 @@ FodyWeavers.xsd
 
 # Test files
 *.txt
+!CMakeLists.txt
 *.pkl
 *.bin
 *.xml
