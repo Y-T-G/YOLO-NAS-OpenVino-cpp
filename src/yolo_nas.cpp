@@ -145,7 +145,6 @@ YoloNAS::YoloNAS(std::string modelPath, std::vector<int> imgsz, bool gpu, float 
     ov::Core core;
     std::shared_ptr<ov::Model> model = core.read_model(modelPath);
 
-    // set model cache directory
     core.set_property(ov::cache_dir(".cache"));
 
     imgSize = imgsz;
@@ -174,8 +173,13 @@ YoloNAS::YoloNAS(std::string modelPath, std::vector<int> imgsz, bool gpu, float 
     }
         catch (const std::runtime_error& err){
             std::cerr << LogWarning("Failed to use GPU. Using CPU instead...", err.what()) << std::endl;
-    compiled_model = std::make_shared<ov::CompiledModel>(core.compile_model(model, "CPU"));
+            gpu = false;
         }
+    
+    if (!gpu) {
+        compiled_model = std::make_shared<ov::CompiledModel>(core.compile_model(model, "CPU"));
+    }
+
 
     infer_request = std::make_shared<ov::InferRequest>(compiled_model -> create_infer_request());
 
