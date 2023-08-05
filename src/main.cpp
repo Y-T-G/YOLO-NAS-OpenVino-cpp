@@ -6,13 +6,13 @@
 int main(int argc, char **argv)
 {
 
-    Config args = parseCLI(argc, argv);
+    Args args = parseArgs(argc, argv);
 
     cv::Mat img = cv::imread(args.source);
 
     std::cout << args.modelPath << std::endl;
 
-    YoloNAS model(args.modelPath, args.imgSize, args.gpu, args.scoreTresh, args.iouTresh);
+    YoloNAS model(args.modelPath, args.imgSize, args.gpu, args.scoreThresh, args.iouThresh);
 
 
     model.predict(img);

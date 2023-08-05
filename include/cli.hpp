@@ -8,15 +8,15 @@ enum Source
     VIDEO
 };
 
-struct Config
+struct Args
 {
     std::string modelPath;
     Source type;
     std::string source;
     std::vector<int> imgSize;
     bool gpu;
-    float scoreTresh;
-    float iouTresh;
+    float scoreThresh;
+    float iouThresh;
 };
 
-Config parseCLI(int argc, char **argv);
+Args parseArgs(int argc, char **argv);
