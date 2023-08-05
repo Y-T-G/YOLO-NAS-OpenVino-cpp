@@ -170,7 +170,14 @@ YoloNAS::YoloNAS(std::string modelPath, std::vector<int> imgsz, bool cuda, float
     // Embed above steps in the graph
     model = ppp.build();
 
+    if (gpu)
+        try {
+        compiled_model = std::make_shared<ov::CompiledModel>(core.compile_model(model, "GPU"));
+    }
+        catch (const std::runtime_error& err){
+            std::cerr << LogWarning("Failed to use GPU. Using CPU instead...", err.what()) << std::endl;
     compiled_model = std::make_shared<ov::CompiledModel>(core.compile_model(model, "CPU"));
+        }
 
     infer_request = std::make_shared<ov::InferRequest>(compiled_model -> create_infer_request());
 
