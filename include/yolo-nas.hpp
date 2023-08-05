@@ -23,6 +23,6 @@ public:
     std::shared_ptr<ov::CompiledModel> compiled_model;
     std::vector<int> imgSize;
     YoloNAS(std::string model_path, std::vector<int> imgsz, bool cuda, float scoreTresh, float iouTresh);
-    void preprocess(cv::Mat &source, cv::Mat &dst, std::vector<float> &ratios);
+    void letterbox(cv::Mat &source, cv::Mat &dst, std::vector<float> &ratios);
     void predict(cv::Mat &img);
 };

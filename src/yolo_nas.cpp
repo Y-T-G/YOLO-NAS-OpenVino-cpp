@@ -16,6 +16,7 @@ public:
             std::vector<Box> filtered_boxes;
 
             // Filter all predictions by self.score_threshold
+            // TODO: Add multi_label support
             if (multi_label_per_box) {
                 for (size_t i = 0; i < output_shape_scores.at(1); i++) {
                     for (size_t j = 0; j < output_shape_scores.at(2); j++) {
@@ -139,13 +140,13 @@ private:
     bool multi_label_per_box;
 };
 
-YoloNAS::YoloNAS(std::string modelPath, std::vector<int> imgsz, bool cuda, float score, float iou)
+YoloNAS::YoloNAS(std::string modelPath, std::vector<int> imgsz, bool gpu, float score, float iou)
 {
     ov::Core core;
     std::shared_ptr<ov::Model> model = core.read_model(modelPath);
 
     // set model cache directory
-    //core.set_property(ov::cache_dir(".cache"));
+    core.set_property(ov::cache_dir(".cache"));
 
     imgSize = imgsz;
 
@@ -158,16 +159,13 @@ YoloNAS::YoloNAS(std::string modelPath, std::vector<int> imgsz, bool cuda, float
     scoreTresh = score;
     iouTresh = iou;
 
-    // Inizialize Preprocessing for the model
+    // preprocessing for the model
     ov::preprocess::PrePostProcessor ppp = ov::preprocess::PrePostProcessor(model);
-    // Specify input image format
     ppp.input().tensor().set_element_type(ov::element::u8).set_layout("NHWC");
-    // Specify preprocess pipeline to input image without resizing
     ppp.input().preprocess().convert_element_type(ov::element::f32);
-    //  Specify model's input layout
     ppp.input().model().set_layout("NCHW");
 
-    // Embed above steps in the graph
+    // embed above steps in the graph
     model = ppp.build();
 
     if (gpu)
@@ -183,7 +181,7 @@ YoloNAS::YoloNAS(std::string modelPath, std::vector<int> imgsz, bool cuda, float
 
 }
 
-void YoloNAS::preprocess(cv::Mat& source, cv::Mat& dst, std::vector<float>& ratios)
+void YoloNAS::letterbox(cv::Mat& source, cv::Mat& dst, std::vector<float>& ratios)
 {
     // padding image to [n x n] dim
     int maxSize = std::max(source.cols, source.rows);
@@ -204,7 +202,7 @@ void YoloNAS::predict(cv::Mat& img)
 {
     cv::Mat imgInput;
     std::vector<float> ratios;
-    preprocess(img, imgInput, ratios);
+    letterbox(img, imgInput, ratios);
 
     // Create tensor from image
     float* input_data = (float*)imgInput.data;
