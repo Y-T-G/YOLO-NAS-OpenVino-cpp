@@ -75,7 +75,7 @@ mo --input-model yolo_nas_s.onnx -s 255 --reverse_input_channels
 
 3. To run the inference, execute the following command:
 ```bash
-main.exe --model <OPENVINO_IR_XML_PATH> [-i <IMAGE_PATH> | -v <VIDEO_PATH>] [--imgsz IMAGE_SIZE] [--gpu] [--iou-thresh IOU_THRESHOLD] [--score-thresh CONFIDENCE_THRESHOLD]
+yolo-nas-openvino-cpp.exe --model <OPENVINO_IR_XML_PATH> [-i <IMAGE_PATH> | -v <VIDEO_PATH>] [--imgsz IMAGE_SIZE] [--gpu] [--iou-thresh IOU_THRESHOLD] [--score-thresh CONFIDENCE_THRESHOLD]
 ```
 
 ## Authors
