@@ -86,7 +86,7 @@ yolo-nas-openvino-cpp.exe --model <OPENVINO_IR_XML_PATH> [-i <IMAGE_PATH> | -v <
 
 Thanks to [@Hyuto](https://github.com/Hyuto) for his work on
 [ONNX
-implementation](https://github.com/Hyuto/yolo-nas-onnx) of
+implementation](https://github.com/Hyuto/yolo-nas-onnx/tree/master/yolo-nas-cpp) of
 YOLO-NAS in C++ which was utilized in this project.
 
 ## License
