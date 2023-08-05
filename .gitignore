@@ -375,3 +375,5 @@ FodyWeavers.xsd
 *.exe
 *.jpg
 *.json
+*.mp4
+*.pth
