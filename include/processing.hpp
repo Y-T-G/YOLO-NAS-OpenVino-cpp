@@ -2,7 +2,6 @@
 Licensed under the MIT License < http://opensource.org/licenses/MIT>.
 SPDX - License - Identifier : MIT
 Copyright(c) 2023 Mohammed Yasin
-Copyright(c) 2023 Wahyu Setianto
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files(the "Software"), to deal
@@ -23,26 +22,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#pragma once
-
-#include <opencv2/opencv.hpp>
 #include "yolo-nas.hpp"
 
-class Colors
-{
-private:
-    std::vector<cv::Scalar> palette{cv::Scalar(56, 56, 255), cv::Scalar(151, 157, 255), cv::Scalar(31, 112, 255), cv::Scalar(29, 178, 255),
-                                    cv::Scalar(49, 210, 207), cv::Scalar(10, 249, 72), cv::Scalar(23, 204, 146), cv::Scalar(134, 219, 61),
-                                    cv::Scalar(52, 147, 26), cv::Scalar(187, 212, 0), cv::Scalar(168, 153, 44), cv::Scalar(255, 194, 0),
-                                    cv::Scalar(147, 69, 52), cv::Scalar(255, 115, 100), cv::Scalar(236, 24, 0), cv::Scalar(255, 56, 132),
-                                    cv::Scalar(133, 0, 82), cv::Scalar(255, 56, 203), cv::Scalar(200, 149, 255), cv::Scalar(199, 55, 255)};
-    int n = (int)palette.size();
-
+class PPYoloEPostPredictionCallback {
 public:
-    inline cv::Scalar get(int i)
-    {
-        return palette[i % n];
-    }
-};
+    PPYoloEPostPredictionCallback(float score_threshold, float nms_threshold, int nms_top_k, int max_predictions, bool multi_label_per_box = true);
+    std::vector<std::vector<Box>> forward(float* pred_bboxes, float* pred_scores, ov::Shape output_shape_bboxes, ov::Shape output_shape_scores);
 
-void drawBoxes(cv::Mat& image, const std::vector<std::vector<Box>>& boxes, float width_ratio, float height_ratio);
+private:
+    std::vector<std::vector<Box>> _filter_max_predictions(std::vector<std::vector<Box>>& res) const;
+    std::vector<size_t> performNMS(const std::vector<Box>& boxes, const std::vector<float>& scores, const std::vector<size_t>& indices, float iou_threshold) const;
+    float calculateIntersection(const Box& box1, const Box& box2) const;
+    float calculateArea(const Box& box) const;
+
+    float score_threshold;
+    float nms_threshold;
+    int nms_top_k;
+    int max_predictions;
+    bool multi_label_per_box;
+};

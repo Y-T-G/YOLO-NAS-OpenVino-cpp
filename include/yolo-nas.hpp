@@ -24,7 +24,6 @@ SOFTWARE.
 
 #pragma once
 
-#include <vector>
 #include <opencv2/opencv.hpp>
 #include <openvino/openvino.hpp>
 
@@ -32,15 +31,12 @@ struct Box {
     float x1, y1, x2, y2, confidence, class_id;
 };
 
-#include <draw.hpp>
-
 class YoloNAS
 {
 private:
     int modelInputShape[4] = { 1, 3, 0, 0 };
     float scoreTresh;
     float iouTresh;
-    Colors colors;
 
 public:
     std::shared_ptr<ov::InferRequest> infer_request;
