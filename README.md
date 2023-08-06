@@ -51,7 +51,7 @@ Command Prompt:
 
 ```bash
 cd \d <yolo-nas-openvino-cpp-directory>
-cmake -S. -Bbuild
+cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release
 cd build
 MSBuild yolo-nas-openvino-cpp.sln /property:Configuration=Release
 ```
@@ -64,8 +64,10 @@ MSBuild yolo-nas-openvino-cpp.sln /property:Configuration=Release
 ```python
 from super_gradients.training import models
 
-net = models.get("yolo_nas_s", pretrained_weights="coco")
-models.convert_to_onnx(model=net, input_shape=(3,640,640), out_path="yolo_nas_s.onnx")
+model = models.get("yolo_nas_s", pretrained_weights="coco")
+model.eval()
+model.prep_model_for_conversion(input_size=(1, 3, 640, 640))
+models.convert_to_onnx(model=model, prep_model_for_conversion_kwargs={"input_size":(1, 3, 640, 640)}, out_path="yolo_nas_s.onnx")
 ```
 
 2. Convert the ONNX model to OpenVINO IR:
