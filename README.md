@@ -21,17 +21,17 @@ an OpenVINO backend to speed up inference performance.
 ## Getting Started
 
 The following instructions demonstrates how to build this
-project on a Windows system. It has only been tested on
-Windows, but the instructions can be replicated on a Linux
-system.
+project on a Windows system and Linux systems supported by OpenVINO.
 
 ### Prerequisites
 
 * **CMake v3.8+** - found at
 [https://cmake.org/](https://cmake.org/)
 
-* **MSVC 2017++** - MinGW will not work as OpenVINO
+* **MSVC 2017++ (Windows Build)** - MinGW will not work on Windows Build as OpenVINO
 libraries are not compatible with MinGW.
+
+* **GNU (Linux Build)** - tested on v11.4.0.
 
 * **OpenVINO Toolkit** - tested on 2022.1. Download
 [here](https://storage.openvinotoolkit.org/repositories/openvino/packages/).
@@ -53,10 +53,15 @@ Command Prompt:
 cd \d <yolo-nas-openvino-cpp-directory>
 cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release
 cd build
+
+[Windows]
 MSBuild yolo-nas-openvino-cpp.sln /property:Configuration=Release
+
+[Linux]
+make
 ```
 
-4. The `.exe` file will be inside the `Release` folder.
+4. The compiled `.exe` will be inside the `Release` folder for Windows build, while the executable will be in root folder for Linux build.
 
 ## Inference
 
@@ -77,7 +82,7 @@ mo --input_model yolo_nas_s.onnx -s 255 --reverse_input_channels
 
 3. To run the inference, execute the following command:
 ```bash
-yolo-nas-openvino-cpp.exe --model <OPENVINO_IR_XML_PATH> [-i <IMAGE_PATH> | -v <VIDEO_PATH>] [--imgsz IMAGE_SIZE] [--gpu] [--iou-thresh IOU_THRESHOLD] [--score-thresh CONFIDENCE_THRESHOLD]
+yolo-nas-openvino-cpp --model <OPENVINO_IR_XML_PATH> [-i <IMAGE_PATH> | -v <VIDEO_PATH>] [--imgsz IMAGE_SIZE] [--gpu] [--iou-thresh IOU_THRESHOLD] [--score-thresh CONFIDENCE_THRESHOLD]
 ```
 
 ## Authors
