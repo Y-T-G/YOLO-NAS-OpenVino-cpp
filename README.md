@@ -85,6 +85,17 @@ mo --input_model yolo_nas_s.onnx -s 255 --reverse_input_channels
 yolo-nas-openvino-cpp --model <OPENVINO_IR_XML_PATH> [-i <IMAGE_PATH> | -v <VIDEO_PATH>] [--imgsz IMAGE_SIZE] [--gpu] [--iou-thresh IOU_THRESHOLD] [--score-thresh CONFIDENCE_THRESHOLD]
 ```
 
+## Benchmarks
+
+The following benchmarks were done on Google Colab using Intel® Xeon® Processor E5-2699 v4 @ 2.20GHz with 2 vCPUs.
+
+| **Backend**               | **Latency** | **FPS** | **Implementation**                                                        |
+|---------------------------|-------------|---------|---------------------------------------------------------------------------|
+| PyTorch                   | 867.02ms    | 1.15    | Native (`model.predict()` in `super_gradients`)                           |
+| ONNX C++ (via OpenCV DNN) | 962.27ms    | 1.04    | [Hyuotu](https://github.com/Hyuto/yolo-nas-onnx/tree/master/yolo-nas-cpp) |
+| ONNX Python               | 626.37ms    | 1.59    | [Hyuotu](https://github.com/Hyuto/yolo-nas-onnx/tree/master/yolo-nas-py)  |
+| OpenVINO C++              | 628.04ms    | 1.59    | [Y-T-G](https://github.com/Y-T-G/yolo-nas-openvino-cpp)                   |
+
 ## Authors
 
 * **Mohammed Yasin** - [@Y-T-G](https://github.com/Y-T-G)
