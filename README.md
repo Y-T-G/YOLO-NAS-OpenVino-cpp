@@ -44,22 +44,30 @@ libraries are not compatible with MinGW.
 
 1. Set the `OpenCV_DIR` environment variable to point to
 your `../../opencv/build` directory.
-1. Set the `OpenVINO_DIR` environment variable to point to
+2. Set the `OpenVINO_DIR` environment variable to point to
 your `../../openvino/runtime/cmake` directory.
-1. Run the following build commands from VS Developer
-Command Prompt:
+3. Run the following build commands:
+
+a. [Windows] VS Developer Command Prompt:
 
 ```bash
 cd \d <yolo-nas-openvino-cpp-directory>
 cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release
 cd build
 
-[Windows]
 MSBuild yolo-nas-openvino-cpp.sln /property:Configuration=Release
+```
 
-[Linux]
+b. [Linux] Bash:
+
+```bash
+cd <yolo-nas-openvino-cpp-directory>
+cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release
+cd build
+
 make
 ```
+
 
 4. The compiled `.exe` will be inside the `Release` folder for Windows build, while the executable will be in root folder for Linux build.
 
