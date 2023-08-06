@@ -70,7 +70,7 @@ models.convert_to_onnx(model=net, input_shape=(3,640,640), out_path="yolo_nas_s.
 
 2. Convert the ONNX model to OpenVINO IR:
 ```bash
-mo --input-model yolo_nas_s.onnx -s 255 --reverse_input_channels
+mo --input_model yolo_nas_s.onnx -s 255 --reverse_input_channels
 ```
 
 3. To run the inference, execute the following command:
