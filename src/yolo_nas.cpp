@@ -220,7 +220,7 @@ void YoloNAS::letterbox(cv::Mat& source, cv::Mat& dst, std::vector<float>& ratio
 
     cv::copyMakeBorder(source, dst, 0, yPad, 0, xPad, cv::BORDER_CONSTANT); // padding black
 
-    cv::resize(dst, dst, cv::Size(modelInputShape[3], modelInputShape[2]), 0, 0, cv::INTER_AREA);
+    cv::resize(dst, dst, cv::Size(modelInputShape[3], modelInputShape[2]), 0, 0, cv::INTER_NEAREST);
 
     ratios.push_back(xRatio);
     ratios.push_back(yRatio);
