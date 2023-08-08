@@ -148,9 +148,3 @@ float PPYoloEPostPredictionCallback::calculateIntersection(const Box& box1, cons
 float PPYoloEPostPredictionCallback::calculateArea(const Box& box) const {
     return (box.x2 - box.x1) * (box.y2 - box.y1);
 }
-
-float score_threshold;
-float nms_threshold;
-int nms_top_k;
-int max_predictions;
-bool multi_label_per_box;
