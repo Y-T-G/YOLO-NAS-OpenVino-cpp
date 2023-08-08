@@ -22,7 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "yolo-nas.hpp"
+#pragma once
+
+#include <vector>
+#include <openvino/openvino.hpp>
+
+struct Box {
+    float x1, y1, x2, y2, confidence, class_id;
+};
 
 class PPYoloEPostPredictionCallback {
 public:

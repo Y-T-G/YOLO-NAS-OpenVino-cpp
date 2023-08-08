@@ -26,7 +26,7 @@ SOFTWARE.
 #pragma once
 
 #include <opencv2/opencv.hpp>
-#include "yolo-nas.hpp"
+#include "processing.hpp"
 
 class Colors
 {

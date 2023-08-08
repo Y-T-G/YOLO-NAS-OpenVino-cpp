@@ -25,7 +25,6 @@ SOFTWARE.
 #include <opencv2/opencv.hpp>
 
 #include "utils.hpp"
-#include "yolo-nas.hpp"
 #include "draw.hpp"
 
 void drawBoxes(cv::Mat& image, const std::vector<std::vector<Box>>& boxes, float width_ratio, float height_ratio) {

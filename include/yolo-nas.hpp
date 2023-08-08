@@ -27,9 +27,7 @@ SOFTWARE.
 #include <opencv2/opencv.hpp>
 #include <openvino/openvino.hpp>
 
-struct Box {
-    float x1, y1, x2, y2, confidence, class_id;
-};
+#include "processing.hpp"
 
 class YoloNAS
 {
@@ -45,4 +43,5 @@ public:
     YoloNAS(std::string model_path, std::vector<int> imgsz, bool cuda, float scoreTresh, float iouTresh);
     void letterbox(cv::Mat &source, cv::Mat &dst, std::vector<float> &ratios);
     void predict(cv::Mat &img);
+    PPYoloEPostPredictionCallback postprocessor;
 };
