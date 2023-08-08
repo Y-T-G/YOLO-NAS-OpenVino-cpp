@@ -60,7 +60,7 @@ int predictVideo(YoloNAS model, Args args) {
 			end = std::chrono::steady_clock::now();
 			cv::imshow(args.source, frame);
 
-			latency = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+			latency = static_cast<float>(std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count());
 			std::cout << "Latency = " << latency << "ms\t";
 			std::cout << "FPS = " << 1000.0 / latency << std::endl;
 
